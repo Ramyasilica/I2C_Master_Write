@@ -30,12 +30,10 @@ module i2c_master_write (
     output reg        ack_error,
 
     output wire       scl,
-    output reg        sda_oe      // open-drain enable (1 = pull low)
+    output reg        sda_oe      // open-drain enable
 );
 
-    // ------------------------------------------------------------
     // SCL generation
-    // ------------------------------------------------------------
     parameter CLK_DIV = 4;
 
     reg [15:0] clk_cnt;
@@ -55,9 +53,7 @@ module i2c_master_write (
 
     assign scl = scl_int;
 
-    // ------------------------------------------------------------
     // FSM
-    // ------------------------------------------------------------
     parameter IDLE     = 3'd0,
               START_ST = 3'd1,
               ADDR     = 3'd2,
@@ -83,7 +79,7 @@ module i2c_master_write (
         end else begin
             case (state)
 
-                // ---------------- IDLE ----------------
+                // IDLE
                 IDLE: begin
                     busy   <= 0;
                     sda_oe <= 0;
@@ -94,7 +90,7 @@ module i2c_master_write (
                     end
                 end
 
-                // ---------------- START (FIXED) ----------------
+                // START
                 // SDA goes low BEFORE next SCL high
                 START_ST: begin
                     sda_oe  <= 1'b1;                 // pull SDA low
@@ -103,7 +99,7 @@ module i2c_master_write (
                     state   <= ADDR;
                 end
 
-                // ---------------- ADDRESS ----------------
+                // ADDRESS
                 ADDR: begin
                     sda_oe <= ~shift[bit_cnt];
                     if (bit_cnt == 0)
@@ -112,7 +108,7 @@ module i2c_master_write (
                         bit_cnt <= bit_cnt - 1;
                 end
 
-                // ---------------- ADDR ACK ----------------
+                // ADDR ACK
                 ADDR_ACK: begin
                     sda_oe <= 0;           // release SDA
                     shift   <= data_in;
@@ -120,7 +116,7 @@ module i2c_master_write (
                     state   <= DATA;
                 end
 
-                // ---------------- DATA ----------------
+                // DATA 
                 DATA: begin
                     sda_oe <= ~shift[bit_cnt];
                     if (bit_cnt == 0)
@@ -129,13 +125,13 @@ module i2c_master_write (
                         bit_cnt <= bit_cnt - 1;
                 end
 
-                // ---------------- DATA ACK ----------------
+                //  DATA ACK
                 DATA_ACK: begin
                     sda_oe <= 0;
                     state  <= STOP_ST;
                 end
 
-                // ---------------- STOP ----------------
+                // STOP
                 STOP_ST: begin
                     sda_oe        <= 0;   // SDA released, rises while SCL high
                     busy          <= 0;
