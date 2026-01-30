@@ -102,6 +102,6 @@ The simulation results verify correct clock generation, address transmission, an
 
 ## Thank you for visiting!
 
-This is my **seventh GitHub repository**, and more **RTL project ** will be added soon 🚀
+This is my **seventh GitHub repository**, and more RTL projects will be added soon 🚀
 
 
