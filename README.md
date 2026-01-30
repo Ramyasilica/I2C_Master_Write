@@ -88,12 +88,10 @@ From the simulation waveform:
 ✅ Correct data transmission
 ✅ Valid I2C master write operation
 
-This confirms that the **I2C Master Write logic is working as expected**.
-
 
 ## 🖼️ Output Waveform
 
-*Add your simulation waveform image here showing SCL, SDA, address transmission, data transfer, and bit counter behavior.*
+![image alt](https://github.com/Ramyasilica/I2C_Master_Read/blob/54ca25d17406cd5ba7bc627fcd2a022062397a5d/I2C_Master_Read.jpg)
 
 
 🧾 Conclusion
@@ -104,6 +102,6 @@ The simulation results verify correct clock generation, address transmission, an
 
 ## Thank you for visiting!
 
-This is my **seventh GitHub repository**, and more **protocol-based RTL projects** will be added soon 🚀
+This is my **seventh GitHub repository**, and more **RTL project ** will be added soon 🚀
 
 
